@@ -180,7 +180,7 @@ const Articles = ({searchedStr}) => {
             fetch(`${global.NodeJS_URL}/api/get/mobile/article/search`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
                     'item' : lastFetchedArticleItemId,
                     'searchedString' : searchedStr,
                 },
@@ -355,7 +355,7 @@ const Articles = ({searchedStr}) => {
         ({item}) => (
             <> 
                 <Text style={styles.emptycard}></Text>
-                { isLoading == false && articleData[item-1] != [] && articleData[item-1] != undefined && articleData[item-1].ArticleStatus == 1 ? 
+                { isLoading == false && articleData[item-1] != [] && articleData[item-1] != undefined/* && articleData[item-1].ArticleStatus == 1*/ ? 
                     <Article item={item} scrollToIndex={scrollToIndex} switchScrollUnlock={switchScrollUnlock} /*data={getArticleData}*//>
                 : null} 
             </>
@@ -450,7 +450,7 @@ const ArticleFunc = ({item, data, scrollToIndex, switchScrollUnlock}) => {
 
     //const [getScrollUnlock, setScrollUnlock] = useGlobalState('scrollUnlock');
 
-    const [getArticleData, setArticleData] = useState([articleData[item].ArticleImg, articleData[item].ArticleName, articleData[item].ArticleSmDescr]);
+    const [getArticleData, setArticleData] = useState([articleData[item].Settlement, articleData[item].ArticleDate]);
     
     const [getIfZoomed, setIfZoomed] = useState(false);
 
@@ -497,7 +497,7 @@ const ArticleFunc = ({item, data, scrollToIndex, switchScrollUnlock}) => {
             [
                 animation.value = {height: flatListHeight, padding:0, marginBottom: 0, paddingTop:0, borderRadius: 0},
                 //setArticleData([data.ArticleImg, data.ArticleName, data.ArticleMDescr]),
-                setArticleData([articleData[item].ArticleImg, articleData[item].ArticleName, articleData[item].ArticleMDescr]),
+                setArticleData([articleData[item].Settlement, articleData[item].ArticleDate]),
                 //setArticleStylesForNextAnimation({height: flatListHeight, padding:0, paddingTop:0, borderRadius:0}),
                 articleStylesForNextAnimation.current = {height: flatListHeight, padding:0, paddingTop:0, borderRadius:0},
                 setIfZoomed(true),
@@ -508,7 +508,7 @@ const ArticleFunc = ({item, data, scrollToIndex, switchScrollUnlock}) => {
             [
                 animation.value = {height:500, padding: 10, marginBottom: 15, paddingTop:5, borderRadius:10},
                 //setArticleData([data.ArticleImg, data.ArticleName, data.ArticleSmDescr]),
-                setArticleData([articleData[item].ArticleImg, articleData[item].ArticleName, articleData[item].ArticleSmDescr]),
+                setArticleData([articleData[item].Settlement, articleData[item].ArticleDate]),
                 //setArticleStylesForNextAnimation({height:500, padding: 10, paddingTop:5, borderRadius:10}),
                 articleStylesForNextAnimation.current = {height:500, padding: 10, paddingTop:5, borderRadius:10},
                 setIfZoomed(false),
@@ -531,7 +531,7 @@ const ArticleFunc = ({item, data, scrollToIndex, switchScrollUnlock}) => {
           })*/    ])}>    
                     <ArticleBody
                       //  onLayout={(event) => {this.find_dimension(event.nativeEvent.layout)}}
-                        props={[getArticleData[0], getArticleData[1], getArticleData[2], getIfZoomed, articleData[item].UserPP/*getPostImgUri,getPostTitle, getPostDescriprion*/]}
+                        props={[articleData[item].ArticleImg, articleData[item].ArticleName, getArticleData[0], getArticleData[1], getArticleData[2], getIfZoomed]}
                         />
                 </TouchableOpacity>
                 <ArticleFooter props={[articleData[item].ArticleId]}/>
@@ -569,9 +569,15 @@ const ArticleBody = ({props}) => {
             imageStyle={{ borderRadius: 10}}
         >
             <Text style={styles.articleBodyHeader}>{props[1]}</Text>
-            { props[3] === false ?
+            { props[5] === false ?
                 <View style={styles.articleBodyFooter} onStartShouldSetResponder={() => false}>
-                    <Text style={styles.articleBodyFooterText} onStartShouldSetResponder={() => true}>{props[2]}</Text>   
+
+                    <Text style={styles.articleBodyFooterLabel} onStartShouldSetResponder={() => true}>Location:</Text>
+                    <Text style={styles.articleBodyFooterText} onStartShouldSetResponder={() => true}>{props[2]}</Text>
+
+                    <Text style={styles.articleBodyFooterLabel} onStartShouldSetResponder={() => true}>Date:</Text>
+                    <Text style={styles.articleBodyFooterText} onStartShouldSetResponder={() => true}>{props[3]}</Text>   
+ 
                 </View>
             :
                 <ScrollView style={styles.articleBodyFooter}  onStartShouldSetResponder={() => true}>
@@ -603,14 +609,14 @@ const { openPanel, saveToFavorites } = useContext(PanelHandlerContext);
 const styles = StyleSheet.create({
     container: {
         flex: 13,
-        backgroundColor: "#cec8b0", //'#8aacc8',
+        backgroundColor: '#8aacc8', //"#cec8b0",
         //paddingTop: getStatusBarHeight(),
-        borderRadius: 10,
+        //borderRadius: 10,
         overflow: "hidden",
     },
     articleContainer: {
         height: 500, //Dimensions.get('window').height*0.6 set it at animation too
-        backgroundColor: '#f2f1e1',
+        backgroundColor: 'white',//#f2f1e1',
         borderRadius: 10,
         marginBottom: 15,
         padding: 10,
@@ -674,11 +680,18 @@ const styles = StyleSheet.create({
                 fontSize: 15,
                 backgroundColor: 'rgba(0,0,0,0.55)',
                 color: 'white',
-                paddingLeft: 10,
+                paddingLeft: 20,
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
             },
+                articleBodyFooterLabel: {
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color:'white',
+                    marginTop: 20,
+                },
                 articleBodyFooterText: {
+                    fontSize: 30,
                     color:'white'
                 },
         articleFooter: {

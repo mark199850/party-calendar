@@ -14,10 +14,10 @@ componentDidMount(){
             AsyncStorage.getItem('name').then((name) => {
                 AsyncStorage.getItem('pp').then((pp) => {
                     if(token && token != null) {
-                        this.setState({token: token, name: name, id:id, pp: pp, isLoading: false});
+                        this.setState({token: token, id:id, isLoading: false});
                         //  setUserToken(token);
                     }else{
-                        this.setState({token: null, name: null, id:null, pp: null, isLoading: false});
+                        this.setState({token: null, id:null, isLoading: false});
                     }
                 })
             })
@@ -47,7 +47,7 @@ render(){
                 AsyncStorage.setItem('name', name).then(() =>{
                     AsyncStorage.setItem('id', id).then(() =>{
                         AsyncStorage.setItem('pp', pp).then(() =>{
-                            this.setState({token: token, name: name, id: id, pp: pp, isLoading: false});
+                            this.setState({token: token, id: id, isLoading: false});
                         })
                     })
                 })
@@ -58,7 +58,7 @@ render(){
                 AsyncStorage.removeItem('name').then(() =>{
                     AsyncStorage.removeItem('id').then(() =>{
                         AsyncStorage.removeItem('pp').then(() =>{
-                            this.setState({token: null, name: null, id: null, pp: null, isLoading: false});
+                            this.setState({token: null, id: null, isLoading: false});
                         })
                     })
                 })
@@ -76,9 +76,9 @@ render(){
         <AuthContext.Provider value={authContext()}>
             {this.state.isLoading == false && (
                 this.state.id != null && this.state.token != null ? (
-                     <SignedOutStack userName={this.state.name}/>  
+                    <SignedInStack/> 
                     ):(
-                         <SignedInStack userName={this.state.name} userPP={this.state.pp}/> 
+                        <SignedOutStack/>  
                     )
                 )
             

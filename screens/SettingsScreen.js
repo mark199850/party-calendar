@@ -1,13 +1,14 @@
-import React from 'react';
+import React  from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import Header from "../components/Settings/Header";
 import OptionList from '../components/Settings/OptionList';
 
-const SettingsScreen = ({userPP, userName}) => {
-    return(
+const SettingsScreen = () => {
+
+return(
         <SafeAreaView style={styles.container}>
-            <Header userName={userName} />
-            <OptionList userName={userName} userPP={userPP}/>
+            <Header />
+            <OptionList />
         </SafeAreaView>
         
 

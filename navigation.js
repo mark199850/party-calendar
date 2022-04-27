@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button, Settings } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AuthScreen, SettingsScreen, HomeScreen, NewArticleScreen, UsersArticlesScreen, UsersFavoritesScreen } from './screens';
 import FastImage from 'react-native-fast-image'
+import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,6 +15,7 @@ const screenOptions = {
 
 export const SignedInStack = ({userName,userPP}) => {  
     return (
+<NavigationContainer>
       <Tab.Navigator>
      {/*    <Stack.Navigator
          initialRouteName="Home"
@@ -33,25 +35,26 @@ export const SignedInStack = ({userName,userPP}) => {
             //children={props =><HomeScreen {...props}/>}
             component={HomeScreen}
             />
-          
+          <Tab.Screen
+            name="New Party"
+            //children={props =><HomeScreen {...props}/>}
+            component={NewArticleScreen}
+            />
           <Tab.Screen
             name="My Profile"
             //children={props => <SettingsScreen {...props} userName={userName} userPP={userPP} />}
            component={SettingsScreen}
           />
       </Tab.Navigator>
+      </NavigationContainer>
     );
   }
 
 
 export const SignedOutStack = () => {
   return(
-    <Tab.Navigator
-     //initialRouteName="Auth"
-    //screenOptions={screenOptions}
-    >
-      <Tab.Screen name="Auth" component={AuthScreen} />
-    </Tab.Navigator>
+
+    <AuthScreen />
   )
   
 }

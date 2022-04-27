@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 //import { Rating, AirbnbRating } from 'react-native-ratings';
 import Articles from '../components/Home/Articles';
-import Header from '../components/Home/Header';
+import Footer from '../components/Home/Footer';
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const HomeScreen = () => {
@@ -15,9 +15,8 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      
-      <Header searchArticle={searchArticle}/>
-      <Articles searchedStr={searchedStr}/>
+      <Articles searchedStr={searchedStr}/> 
+      <Footer searchArticle={searchArticle}/>
     </SafeAreaView>
   );
 }

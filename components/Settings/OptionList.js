@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import FastImage from 'react-native-fast-image'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import NonScrollableModal from "../globals/NonScrollableModal";
 
-const OptionList = ({userPP,userName}) => {
+const OptionList = () => {
+    const [userName, setUserName] = useState(null)
+    const [userPP, setUserPP] = useState(null)
+
+    useEffect(() => { 
+        AsyncStorage.getItem('name').then((name) => {
+            AsyncStorage.getItem('pp').then((pp) => {
+                setUserName(name);
+                setUserPP(pp);
+            })
+        })
+    }, []);
+        
     const [isModalVisible, setModalVisible] = useState(false);
     const toggleModal = () => {
         setModalVisible(!isModalVisible);

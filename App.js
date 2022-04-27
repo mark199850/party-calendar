@@ -4,7 +4,6 @@ import {StatusBar} from 'react-native';
 //import SecureStore from 'expo-secure-store';
 import AuthNavigation from './AuthNavigation';
 import Toast, { BaseToast, SuccessToast, ErrorToast, InfoToast } from 'react-native-toast-message';
-import { NavigationContainer } from '@react-navigation/native';
 
 const toastConfig = {
   /*
@@ -69,7 +68,6 @@ const toastConfig = {
 export default function App() {
     return (
       <>
-      <NavigationContainer>
                 <StatusBar
           animated={true}
           backgroundColor="#4d4a42"
@@ -78,7 +76,6 @@ export default function App() {
           hidden={false} />
         <AuthNavigation />
         <Toast config={toastConfig}/>
-      </NavigationContainer>
 
       </>
     ) 
