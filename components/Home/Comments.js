@@ -156,11 +156,11 @@ const Comments = ({articleId}) => {
                     if (data == ''){ //if there isn't already loaded results
                         showToast('error','Error',jsonRes.message);
                     }
-                    found=false;
+                    //found=false;
                 } else {
                     const jsonRes = await res.json();
 
-                    found=true;
+                    //found=true;
                     var articleResultId = 0;
                     //let adata = [...getArticleData]; //state-es articledata-hoz
                     for (articleResultId = 0; articleResultId < jsonRes.length; articleResultId++){

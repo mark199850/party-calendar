@@ -1,10 +1,12 @@
 import React, { useState, useContext} from 'react';
-import { Dimensions, View, ScrollView, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, useWindowDimensions, StatusBar, SafeAreaView } from 'react-native';
+import { Dimensions, View, ScrollView, ImageBackground, Text, Image, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, useWindowDimensions, StatusBar, SafeAreaView } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { AuthContext } from '../components/globals/Context';
 
 import MaskInput, { Masks } from 'react-native-mask-input';
 import Toast from 'react-native-toast-message';
+import MaskedView from "@react-native-masked-view/masked-view";
+import LinearGradient from "react-native-linear-gradient";
 
 //import {useStateIfMounted} from 'use-state-if-mounted';
 //import DatePicker from 'react-native-date-picker'
@@ -150,13 +152,62 @@ function AuthScreen ({navigation}) {
 
     return (
         <SafeAreaView style={styles.screenContainer}>
+
         <View style={[{ minHeight: Math.round(windowHeight), height:Dimensions.get('screen').height }]}>
             <View style = {styles.titleGradient}>
-                    <Text style={styles.titleText}>IdeaShare</Text>
+                    <MaskedView
+                        style={{ flex: 1, flexDirection: 'row', height: '100%' }}
+                        maskElement={
+                        <View
+                            style={{
+                            // Transparent background because mask is based off alpha channel.
+                            backgroundColor: 'transparent',
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            }}
+                        >
+                                <Text
+                                    adjustsFontSizeToFit
+                                    numberOfLines={1}
+                                    style={{
+                                        alignSelf: "flex-start",
+                                        textAlign: 'left',
+                                        fontSize: 110,
+                                        color: 'black',
+                                        fontWeight: 'bold',
+                                        paddingLeft: '5%',
+                                        paddingRight: '30%',
+
+                                    }}
+                                >
+                                PARTY
+                                </Text>    
+                                <Text
+                                    adjustsFontSizeToFit
+                                    numberOfLines={1}
+                                    style={{
+                                        alignSelf: "flex-end",
+                                        textAlign: 'right',
+                                        fontSize: 50,
+                                        color: 'black',
+                                        fontWeight: 'bold',
+                                        paddingLeft: '40%',
+                                        paddingRight: '10%',
+                                    }}
+                                >
+                                CALENDAR
+                                </Text>    
+                        </View>
+                        }
+                    >
+                        <Image source={require('../images/loginbg.jpg')}  style={{width:Dimensions.get('screen').width, minHeight: Math.round(windowHeight), height:Dimensions.get('screen').height, top: -getStatusBarHeight()}}/>
+                    </MaskedView>
+        {/* <GradientText style={styles.titleText}>Party Calendar</GradientText> */}
             </View>
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Text style={styles.heading}>{isLogin ? 'Login' : 'Signup'}</Text>
+                    {/* <Text style={styles.heading}>{isLogin ? 'Login' : 'Signup'}</Text> */}
                     <View style={styles.form}>
                             {!isLogin ?
                                 <ScrollView style={styles.inputs}>
@@ -185,16 +236,22 @@ function AuthScreen ({navigation}) {
                                 </ScrollView>
                             : 
                                 <View style={styles.inputs}>
-                                    <TextInput style={styles.input} placeholder="Username" placeholderTextColor='darkgrey' autoCapitalize="none" onChangeText={setUserUn}></TextInput>
-                                    <TextInput style={styles.input} placeholder="Password" placeholderTextColor='darkgrey' onChangeText={setUserPw} secureTextEntry={true}></TextInput>
+                                    <TextInput style={[styles.input, styles.blueBorder]} placeholder="Username" placeholderTextColor='darkgrey' autoCapitalize="none" onChangeText={setUserUn}></TextInput>
+                                    <TextInput style={[styles.input, styles.blueBorder]} placeholder="Password" placeholderTextColor='darkgrey' onChangeText={setUserPw} secureTextEntry={true}></TextInput>
                                 </View>
                             }
                     </View>
                 </View>
                 <View style={styles.footer}>
                      {/* <Text style={[styles.message, {color: isError ? 'red' : 'green'}]}>{getmessage ? getMessage() : null}</Text> */}
-                    <TouchableHighlight style={styles.button} onPress={onSubmitHandler} underlayColor={'#32302a'}>
-                        <Text style={styles.buttonText}>Done</Text>
+                    <TouchableHighlight style={{width: '100%', borderRadius: 5}}onPress={onSubmitHandler} underlayColor={'#32302a'}>
+                        <LinearGradient style={styles.button}
+                            colors={['#1378b0', '#ED3273'/*"#BF55ECFF"*/]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                        >
+                            <Text style={styles.buttonText}>{isLogin ? 'Log In' : 'Sign Up'}</Text>
+                        </LinearGradient>
                     </TouchableHighlight>
                     <TouchableOpacity style={styles.buttonAlt} onPress={onChangeHandler}>
                         <Text style={styles.buttonAltText}>{isLogin ? 'Sign Up' : 'Log In'}</Text>
@@ -213,22 +270,24 @@ const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#f2f1e1', //'#ECF0F1'
+        backgroundColor: '#00000055',//'#f2f1e1', //'#ECF0F1'
       },
         titleGradient: {
-            flex: 2,
+            backgroundColor: '#000000AA',
+            flex: 2.5,
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: getStatusBarHeight(),
             //backgroundColor: '#009688',
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
             width: '100%',
-            elevation: 10,
         },
             titleText: {
                 fontSize: 50,
-                color: '#4d4a42', //'#eeffff',
+                fontWeight: 'bold',
+                backgroundColor: '#0000DD',
+               // color: #4d4a42', //'#eeffff',
             },
         container: {
             flex: 9,
@@ -240,10 +299,14 @@ const styles = StyleSheet.create({
                 paddingBottom: 0,
             },
                 heading: {
-                    fontSize: 30,
+                    fontSize: 50,
                     fontWeight: 'bold',
-                    color: '#4d4a42',//'#8aacc8',
+                    color: '#1378b0DD',// '#4d4a42',//'#8aacc8',
+                    alignSelf: 'flex-start',
                     marginBottom: 20,
+                    textShadowOffset: {width: 0, height: 1},
+                    textShadowColor: '#00000088',
+                    textShadowRadius: 2,
                 },
                 form: {
                     flex: 1,
@@ -255,14 +318,22 @@ const styles = StyleSheet.create({
 
                     }, 
                         input: {
-                            backgroundColor: 'white',
+                            backgroundColor: 'rgba(0,0,0,0.5)',
                             borderRadius: 10,
+                            borderWidth: 1,
+                            borderColor: '#793372DD',
                             marginBottom: 10,
                             paddingLeft: 10,
                             minHeight: 40,
-                            color: 'black',
+                            color: 'white',
+                            fontWeight: 'bold',
                             margin: 5,
-                            elevation: 2,
+                        },
+                        blueBorder:{
+                            borderColor: '#1378b0DD',
+                        },
+                        purpleBorder: {
+                            borderColor: '#793372DD',
                         },
             footer: {
                 height: 150,
@@ -273,12 +344,11 @@ const styles = StyleSheet.create({
             },
                 button: {
                     width: '100%',
-                    backgroundColor: '#4d4a42',
+                    backgroundColor: '#793372DD',//'#2280F0DD',//'#4d4a42',
                     height: 40,
                     borderRadius: 5,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginVertical: 5,
                 },
                 buttonText: {
                     color: 'white',
@@ -290,13 +360,13 @@ const styles = StyleSheet.create({
                     borderWidth: 1,
                     height: 40,
                     borderRadius: 5,
-                    borderColor: '#4d4a42'/*'#8aacc8'/*'#0077c2'*/,
+                    borderColor: '#793372DD',//'#BF55ECDD',//'#4d4a42'/*'#8aacc8'/*'#0077c2'*/,
                     justifyContent: 'center',
                     alignItems: 'center',
                     marginVertical: 5,
                 },
                 buttonAltText: {
-                    color: '#4d4a42',//'#8aacc8',
+                    color: 'white',//'#4d4a42',//'#8aacc8',
                     fontSize: 16,
                     fontWeight: '400',
                 },

@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import MaskInput, { Masks } from 'react-native-mask-input';
 import DropDownPicker from 'react-native-dropdown-picker';
+import LinearGradient from "react-native-linear-gradient";
 
 const ArticleDataForm = () => {
 
@@ -122,25 +123,13 @@ const ArticleDataForm = () => {
     }
     return(
         <View style={styles.container}>
-            <View style={styles.formContainer}>
-            <View>
-                
-                <Text style={styles.label}>Title/Name: {articleName.length}/100</Text>
-                <TextInput style={styles.input} onChangeText={setArticleName} maxLength={100} autoCapitalize="none"></TextInput>
-                
-                <Text style={styles.label}>Image (Leave it empty to use the default picture): {articleImg.length}/1000</Text>
-                <TextInput style={styles.inputMultiline} onChangeText={setArticleImg} maxLength={1000} multiline={true} autoCapitalize="none"></TextInput>
-                
-                <Text style={styles.label}>Date:</Text>
-                <MaskInput style={styles.input} value={articleDate} onChangeText={(masked, unmasked) => {setArticleDate(masked)}}       mask={Masks.DATE_YYYYMMDD/*[/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]*/}/>
-                
-                <Text style={styles.label}>Settlement:</Text>
-                <DropDownPicker
+            <DropDownPicker
                     open={open}
                     setOpen={setOpen}
                     value={settlement}
                     items={items}
                     setValue={setSettlement}
+                    placeholder={"City"}
                     /*onChangeValue={(value) => {
                         setArticleSettlement(value);
                       }}*/
@@ -152,13 +141,54 @@ const ArticleDataForm = () => {
                         onChangeText: (text) => {fetchSettlements(text), setSearchedStr(text)}
                       }}
                     onSelectItem={(item) => {setOpen(false), setSettlement(item)}}
+                    style={styles.dropdownPickerMain}
+                    badgeStyle={{
+                        backgroundColor: "#000000DD"
+                    }}
+                    selectedItemContainerStyle={{
+                        backgroundColor: "#000000DD"
+                    }}
+                    modalContentContainerStyle={{
+                        backgroundColor: "#000000DD"
+
+                    }}
+                    theme={"DARK"}
+                    placeholderStyle={{
+                        color: "lightgrey",
+                        fontWeight: "bold"
+                      }}
                 />
+            <ScrollView style={styles.formContainer}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Title/Name:</Text>
+                    <Text style={styles.counter}>{articleName.length}/100</Text>
+                </View>
+            
+                <TextInput style={styles.input} onChangeText={setArticleName} maxLength={100} autoCapitalize="none"></TextInput>
+                
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Image (optional):</Text>
+                    <Text style={styles.counter}>{articleImg.length}/1000</Text>
+                </View>
+
+                <TextInput style={styles.input} onChangeText={setArticleImg} maxLength={1000} multiline={true} autoCapitalize="none"></TextInput>
+                
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Date:</Text>
+                </View>
+                <MaskInput style={styles.input} value={articleDate} onChangeText={(masked, unmasked) => {setArticleDate(masked)}}       mask={Masks.DATE_YYYYMMDD/*[/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]*/}/>
+                
                 {/* <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}	style={{ flex: 1 }}> */}
-            </View>
-            </View>
+            </ScrollView>
             <View style={styles.submitBtnContainer}>
-                <TouchableHighlight style={styles.submitBtn} /*onPress={() => {}}*/ onPress={Submit} underlayColor={'#32302a'}>
-                    <Text style={styles.submitBtnText}>Apply</Text>
+                <TouchableHighlight  /*onPress={() => {}}*/ onPress={Submit} underlayColor={'#32302a'}>
+                    <LinearGradient style={styles.submitBtn}
+                        colors={['#1378b0', '#ED3273'/*"#BF55ECFF"*/]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                    >
+                        <Text style={styles.submitBtnText}>Apply</Text>
+                    </LinearGradient>
                 </TouchableHighlight>
             </View>
         </View>
@@ -169,50 +199,63 @@ const styles = StyleSheet.create({
     container: {
         flex:13,
         paddingHorizontal: 10,
-        backgroundColor: "#f2f1e1",
+        backgroundColor: '#000000BB',//"#f2f1e1",
+    },
+    dropdownPickerMain:{
+        backgroundColor: "#00000055",
+        borderColor: '#ed217388',
+        marginBottom: 20,
     },
     formContainer: {
         flex: 1,
         borderRadius: 10,
         overflow: 'hidden',
     },
+    labelContainer: {
+        height: 30,
+        width: '100%',
+        flexDirection: "row",
+    },
     label: {
-        color: '#4d4a42',
-        marginBottom: 10,
+        fontSize: 20,
+        flex:1,
+        fontWeight: 'bold',
+        color: 'lightgrey',//'#4d4a42',
+        marginBottom: 0,
+    },
+    counter: {
+        flex:1,
+        flexDirection: "row",
+        textAlign: 'right',
+        fontWeight: 'bold',
+        color: 'lightgrey',//'#4d4a42',
+        marginBottom: 0,
     },
     input: {
         width: '100%',
-        paddingTop: 10,
+        //paddingTop: 10,
         fontSize: 16, 
-        minHeight: 40,
-        color: 'black',
-        backgroundColor: 'white',
-        borderRadius: 10,
+        //height: 40,
+        color: 'lightgrey',
+        fontWeight: 'bold',
+        //backgroundColor: 'white',
+        //borderRadius: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
         alignSelf: 'center',
-        marginBottom: 20,
-        paddingLeft: 10,
-    },
-    inputMultiline: {
-        width: '100%',
-        paddingTop: 10,
-        fontSize: 16, 
-        minHeight: 40,
-        color: 'black',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        alignSelf: 'center',
-        marginBottom: 20,
-        paddingLeft: 10,
+        marginBottom: 60,
+        paddingBottom: 2,
+        paddingLeft: 5,
     },
     submitBtnContainer : {
         padding: 10,
-        backgroundColor: "#f2f1e1",
+       // backgroundColor: "#f2f1e1",
     },
     submitBtn: {
         height: 50,
         width: '100%',
         alignSelf: 'center',
-        backgroundColor: '#4d4a42',
+        //backgroundColor: '#4d4a42',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,

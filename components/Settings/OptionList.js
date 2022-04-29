@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../components/globals/Context';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //import NonScrollableModal from "../globals/NonScrollableModal";
 
@@ -35,6 +37,28 @@ const OptionList = () => {
             </TouchableHighlight>
             {/* <NonScrollableModal isVisible={isModalVisible} onSwipeComplete={toggleModal}/> */}
             </View>
+            <LogoutButton/>
+        </View>
+    )
+}
+
+const LogoutButton = () => {
+    const { signOut } = useContext(AuthContext);
+
+    const onSubmitHandler = () => {
+        
+        signOut();
+    };
+
+    return(
+        <View style={styles.LogoutContainer}>
+            <TouchableHighlight 
+                underlayColor={'rgba(0,0,0,0.3)'}
+                style={styles.LogoutButton}
+                onPress={onSubmitHandler}>
+                <MaterialCommunityIcons name="star" color="#4d4a42" size={34} />
+
+            </TouchableHighlight>
         </View>
     )
 }
@@ -43,6 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flex:13,
         alignItems: 'center',
+        backgroundColor: '#000000BB',
     },
     profileImg: {
         height: 100,
@@ -70,6 +95,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
     },
+    
 });
 
 export default OptionList

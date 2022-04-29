@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, ImageBackground} from 'react-native';
 
 //import SecureStore from 'expo-secure-store';
 import AuthNavigation from './AuthNavigation';
@@ -70,13 +70,18 @@ export default function App() {
       <>
                 <StatusBar
           animated={true}
-          backgroundColor="#4d4a42"
+          backgroundColor='#00000000'//"#4d4a42"
           barStyle='light-content'
           //showHideTransition={statusBarTransition}
-          hidden={false} />
-        <AuthNavigation />
-        <Toast config={toastConfig}/>
+          hidden={false}
+          translucent={true}
+          />
+        <ImageBackground source={require('./images/loginbg.jpg')} style={{height: "100%"}}>
 
+          <AuthNavigation />
+        
+          <Toast config={toastConfig}/>
+        </ImageBackground>
       </>
     ) 
   }

@@ -596,10 +596,10 @@ const { openPanel, saveToFavorites } = useContext(PanelHandlerContext);
     <View style={styles.articleFooter}>
         <TouchableOpacity activeOpacity={0.5} style={styles.articleFooterBtnContainer}/* underlayColor={'rgba(0,0,0,0.3)'} */onPress={() => {saveToFavorites(props[0])}}>
             {/* <FastImage source={require("../../public/images/star.png")} style={styles.articleFooterBtnImg}/> */}
-            <MaterialCommunityIcons name="star" color="#4d4a42" size={34} />
+            <MaterialCommunityIcons name="star" color="#DDDDDDDD" size={34} />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} style={styles.articleFooterBtnContainer} /*underlayColor={'rgba(0,0,0,0.3)'}*/ onPress={() => {openPanel(props[0],'comments')}}>
-            <MaterialCommunityIcons name="comment" color="#4d4a42" size={30} />
+            <MaterialCommunityIcons name="comment" color="#DDDDDDDD" size={30} />
             {/* <FastImage source={require("../../public/images/chat-bubble.png")} style={styles.articleFooterBtnImg}/> */}
         </TouchableOpacity>                    
     </View>
@@ -609,29 +609,20 @@ const { openPanel, saveToFavorites } = useContext(PanelHandlerContext);
 const styles = StyleSheet.create({
     container: {
         flex: 13,
-        backgroundColor: '#8aacc8', //"#cec8b0",
+        backgroundColor:  '#000000BB',//'#8aacc8', //"#cec8b0",
         //paddingTop: getStatusBarHeight(),
         //borderRadius: 10,
         overflow: "hidden",
     },
     articleContainer: {
         height: 500, //Dimensions.get('window').height*0.6 set it at animation too
-        backgroundColor: 'white',//#f2f1e1',
+        backgroundColor: '#00000000',//#f2f1e1',
         borderRadius: 10,
         marginBottom: 15,
         padding: 10,
         paddingBottom: 10, //overrides the animation of "padding"
         paddingTop: 5,
         marginTop: -1,
-        shadowColor: "#000000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        
-        elevation: 10,
     },
         articleHeaderContainer: {
             //flex:1,
@@ -656,7 +647,8 @@ const styles = StyleSheet.create({
             },
             articleHeaderUName: {
                 justifyContent: 'center',
-                color: 'black',
+                fontWeight:'bold',
+                color: 'lightgrey',
             },
         articleBodyContainer:{
             //aspectRatio : 1,
@@ -667,19 +659,19 @@ const styles = StyleSheet.create({
         },
             articleBodyHeader: {
                 //flex:1,
-                marginBottom : 100,
+                marginBottom : 150,
                 fontSize: 25,
-                backgroundColor: 'rgba(0,0,0,0.55)',
-                color: 'white',
+                backgroundColor: 'rgba(0,0,0,0.80)',
+                color: 'lightgrey',
                 paddingLeft: 10,
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
             },
             articleBodyFooter: {
-                flex:3,
+                flex:1,
                 fontSize: 15,
-                backgroundColor: 'rgba(0,0,0,0.55)',
-                color: 'white',
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                color: 'lightgrey',
                 paddingLeft: 20,
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
@@ -687,12 +679,12 @@ const styles = StyleSheet.create({
                 articleBodyFooterLabel: {
                     fontSize: 20,
                     fontWeight: 'bold',
-                    color:'white',
+                    color: 'lightgrey',
                     marginTop: 20,
                 },
                 articleBodyFooterText: {
                     fontSize: 30,
-                    color:'white'
+                    color: 'lightgrey',
                 },
         articleFooter: {
             //flex:1,

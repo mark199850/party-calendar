@@ -17,13 +17,13 @@ const Footer = ({searchArticle}) => {
     const animatedStyles = useAnimatedStyle(() => {
         return {
             width: withTiming(animation.value.width,{
-                duration:500,
+                duration:300,
                 easing: Easing.bezier(0.6, 0.30, 0, 1),
             }),
 
             borderRadius: withTiming(animation.value.borderRadius,{
                 delay:100,
-                duration:500,
+                duration:300,
                 easing: Easing.bezier(0.6, 0.23, 0, 1),
             }),
         };  
@@ -75,44 +75,11 @@ const Footer = ({searchArticle}) => {
                         style={styles.button}
                         onPress={() => toggleSearchBar(!search)}>
                             {search == true ?
-                                <MaterialCommunityIcons name="window-close" color={'#4d4a42'} size={40} />
+                                <MaterialCommunityIcons name="window-close" color={'#1378b0'} size={40} />
                             :
-                                <MaterialCommunityIcons name="magnify" color={'#4d4a42'} size={40} />
+                                <MaterialCommunityIcons name="magnify" color={'#1378b0DD'} size={40} />
                             }
                     </TouchableOpacity>
-        </View>
-    )
-}
-
-
-const SearchButton = ({toggleSearchBar}) => {
-
-    return(
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-                underlayColor={'rgba(0,0,0,0.3)'}
-                style={styles.button}
-                onPress={() => toggleSearchBar(true)}>
-                     {toggleSearchBar == true ?
-                <MaterialCommunityIcons name="magnify" color={'#4d4a42'} size={40} />
-                :
-                <MaterialCommunityIcons name="window-close" color={'#4d4a42'} size={40} />
-                     }
-            </TouchableOpacity>
-        </View>
-    )
-}
-
-const CancelButton = ({toggleSearchBar}) => {
-
-    return(
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity 
-                underlayColor={'rgba(0,0,0,0.3)'}
-                style={styles.button}
-                onPress={() => toggleSearchBar(false)}>
-                <MaterialCommunityIcons name="window-close" color={'#4d4a42'} size={40} />
-            </TouchableOpacity>
         </View>
     )
 }
@@ -126,11 +93,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: 60,
         color: '#4d4a42',
-        backgroundColor: 'white',//'#cec8b0',
-        shadowColor: "#000000",
-        elevation: 5,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        backgroundColor: '#000000AA',//'#cec8b0',
+        borderRadius: 10,
     },
     AnimatedView: {
         width:0,
@@ -143,9 +107,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: "row",
         paddingLeft: 10,
-        color: '#4d4a42',
+        color: 'lightgrey',
         margin:0,
-        backgroundColor: 'white',
+        //backgroundColor: 'white',
         borderRadius: 10,
         margin: 10,
         //textAlign: 'center',

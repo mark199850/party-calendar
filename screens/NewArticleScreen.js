@@ -16,7 +16,7 @@ const NewArticleScreen = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: '#00000000',
       //paddingTop: getStatusBarHeight(),
     },
   });

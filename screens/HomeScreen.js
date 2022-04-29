@@ -24,7 +24,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#cec8b0"
+    backgroundColor:  '#00000000',//"#cec8b0"
     //paddingTop: getStatusBarHeight(),
   },
 });
