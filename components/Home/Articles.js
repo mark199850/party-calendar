@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, useContext, useRef } from "react";
 import { View, ScrollView, Text, Dimensions, StyleSheet, TouchableOpacity, FlatList, ImageBackground } from "react-native";
 //import ScrollableModal from "../globals/ScrollableModalWithRef";
+import CustomModal from "../globals/CustomModal";
 import { PanelHandlerContext } from "../globals/Context";
 import { requestCameraPermission, requestStoragePermission } from "../globals/PermRequests";
 import * as ImagePicker from 'react-native-image-picker';
@@ -61,7 +62,7 @@ const Articles = ({searchedStr}) => {
             //console.log(isModalVisible);
         },
          closePanel: () => {
-            modalRef.current.close();
+            //modalRef.current.close();
             setContent('');
         },
         saveToFavorites: (articleId) => {
@@ -108,15 +109,14 @@ const Articles = ({searchedStr}) => {
 
     useEffect(() => { 
         if (content != ""){
-        modalRef.current.open();
+            setModalVisible(true);
+
+            //modalRef.current.open();
+        }else if ( content == ""){
+            setModalVisible(false);
         }
+
     }, [content]);
-
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-      };
-
-
 
     //ImagePicker RN
     const [pickerResponse, setPickerResponse] = useState(null);
@@ -376,6 +376,7 @@ const Articles = ({searchedStr}) => {
         <View style={styles.container} onLayout={(event) => { find_dimesions(event.nativeEvent.layout) }}>
         {/* <ScrollableModal isVisible={isModalVisible} onSwipeComplete={toggleModal} articleId={articleId}/> */}
        {/*   <ScrollableModal /*isVisible={isModalVisible}*//* onSwipeComplete={() => {setContent('')}} id={/*"0CaIwAncmpgZtxjBTM4pF"*//*articleId} content={content} ref={modalRef}/>*/}
+       <CustomModal showModal={isModalVisible} id={/*"0CaIwAncmpgZtxjBTM4pF"*/articleId} contentprop={content} />
         { isLoading && <><LoadingPlaceholder style={{flex: 1}}/><LoadingPlaceholder style={{flex: 1}}/></> }
             <FlatList
                 scrollEnabled = {getScrollUnlock}

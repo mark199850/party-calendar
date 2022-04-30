@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList, } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, FlatList, } from "react-native";
 import { requestCameraPermission, requestStoragePermission } from "../globals/PermRequests";
 import * as ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image'
@@ -198,7 +198,7 @@ const Comments = ({articleId}) => {
 
     const renderItem = useCallback(
         ({item}) => (
-            
+            <TouchableWithoutFeedback>
             <View>
                 {/* articleData[item-1] == !undefined && */articleData[item-1] != [] ? 
                 <View>
@@ -206,7 +206,7 @@ const Comments = ({articleId}) => {
                 </View>
                 : null} 
             </View>
-
+            </TouchableWithoutFeedback>
 
         ),
     []);

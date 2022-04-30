@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../components/globals/Context';
+import { PanelHandlerContext } from '../globals/Context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import CustomModal from "../globals/CustomModal";
 
 //import NonScrollableModal from "../globals/NonScrollableModal";
 
 const OptionList = () => {
     const [userName, setUserName] = useState(null)
     const [userPP, setUserPP] = useState(null)
+    const [isModalVisible, setModalVisible] = useState(false);
 
     useEffect(() => { 
         AsyncStorage.getItem('name').then((name) => {
@@ -20,25 +23,40 @@ const OptionList = () => {
         })
     }, []);
         
-    const [isModalVisible, setModalVisible] = useState(false);
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-      };
+    const panelHandlerContext = useMemo(() => ({
+        openPanel: () => {
+            setModalVisible(true);
+        },
+         closePanel: () => {
+            setModalVisible(true);
+        }}))
 
+
+
+    useEffect(() => { 
+        console.log(isModalVisible);
+
+    }, [isModalVisible]);
 
     return(
+        <PanelHandlerContext.Provider value={panelHandlerContext}>
+
         <View style={styles.container}>
                 <FastImage style={styles.profileImg} source={{uri: userPP}} />
                 <Text style={styles.userName}>{userName}</Text>               
             
             <View style={{flex: 1}}>
-            <TouchableHighlight style={styles.submitBtn} /*onPress={() => {}}*/ onPress={toggleModal} underlayColor={'#32302a'}>
+            <TouchableHighlight style={styles.submitBtn} /*onPress={() => {}}*/ onPress={() => ([setModalVisible(true), underlayColor='#32302a'])}>
                 <Text style={styles.submitBtnText}>Edit profile data</Text>
             </TouchableHighlight>
+            <CustomModal showModal={isModalVisible} contentprop={"editProfile"} />
+
+            {/* <CustomModal showModal={isModalVisible} toggleModal={toggleModal} /> */}
             {/* <NonScrollableModal isVisible={isModalVisible} onSwipeComplete={toggleModal}/> */}
             </View>
             <LogoutButton/>
         </View>
+        </PanelHandlerContext.Provider>
     )
 }
 

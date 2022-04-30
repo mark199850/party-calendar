@@ -1,5 +1,6 @@
 import React from 'react';
 import {StatusBar, ImageBackground} from 'react-native';
+import { ModalPortal } from 'react-native-modals';
 
 //import SecureStore from 'expo-secure-store';
 import AuthNavigation from './AuthNavigation';
@@ -82,6 +83,7 @@ export default function App() {
         
           <Toast config={toastConfig}/>
         </ImageBackground>
+        <ModalPortal />
       </>
     ) 
   }

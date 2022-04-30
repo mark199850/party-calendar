@@ -13,10 +13,10 @@ var articleData = [];
 var commentCreatedAt = '';
 var userId = '';
 
-export default Modal = () => {
-const [ShowComment, setShowModelComment] = useState(false); /////open modal/////////////////////
-const [animateModal, setanimateModal] = useState(false);
+export default Modale = ({showModal, toggleModal}) => {
 
+const [modalState, setModalState] = useState(false); /////open modal/////////////////////
+const [animateModal, setanimateModal] = useState(false);
 
     //Toast message
     const showToast = (type,text1,text2) => {
@@ -126,12 +126,17 @@ const [animateModal, setanimateModal] = useState(false);
     const [getArticleData, setArticleData] = useState([]);
     const [getLastFetchedArticleItemId, setLastFetchedArticleItemId] = useState(1);
     useEffect(() => {
-        lastFetchedArticleItemId = 1;
-        //setArticleData([]); ////state-es articledata-hoz
-        articleData = [];
-        setData([]);
-        fetchMore();
-    }, []);
+            setModalState(showModal);
+            if (showModal === true) {
+                lastFetchedArticleItemId = 1;
+                //setArticleData([]); ////state-es articledata-hoz
+                articleData = [];
+                setData([]);
+                fetchMore();
+            }
+
+
+    }, [showModal]);
 
     const fetchMore = (refreshing) => {
         if (refreshing == true) {
@@ -220,44 +225,45 @@ const [animateModal, setanimateModal] = useState(false);
 
 return(
 <SwipeUpDownModal
-modalVisible={ShowComment}
-PressToanimate={animateModal}
-//if you don't pass HeaderContent you should pass marginTop in view of ContentModel to Make modal swipeable
-ContentModal={
-  <View style={styles.containerContent}>
-   <FlatList
-                    data={data}
-                    onEndReachedThreshold={2}
-                    onEndReached={() => fetchMore(false)}
-                    //removeClippedSubviews = {false}
-                    //updateCellsBatchingPeriod = {10}
-                    initialNumToRender = {7}
-                    maxToRenderPerBatch={3}
-                    windowSize={5}
-                    renderItem={renderItem}
-                    keyExtractor={keyExtractor}
-                    //onRefresh={() => fetchMore(true)}
-                // refreshing={false}
-                    /*ListHeaderComponent={this.renderHeader}*/
-                />
-  </View>
-}
-HeaderStyle={styles.headerContent}
-ContentModalStyle={styles.Modal}
-HeaderContent={
-  <View style={styles.containerHeader}>
-        <Button 
-            title={"Press Me"}
-            onPress={() => {
-              setanimateModal(true);
-            }}
-         />
-  </View>
-}
-onClose={() => {
-    setModelComment(false);
-    setanimateModal(false);
-}}
+    modalVisible={modalState}
+    PressToanimate={animateModal}
+    //if you don't pass HeaderContent you should pass marginTop in view of ContentModel to Make modal swipeable
+    ContentModal={
+    <View style={styles.containerContent}>
+    <FlatList
+                        data={data}
+                        onEndReachedThreshold={2}
+                        onEndReached={() => fetchMore(false)}
+                        //removeClippedSubviews = {false}
+                        //updateCellsBatchingPeriod = {10}
+                        initialNumToRender = {7}
+                        maxToRenderPerBatch={3}
+                        windowSize={5}
+                        renderItem={renderItem}
+                        keyExtractor={keyExtractor}
+                        //onRefresh={() => fetchMore(true)}
+                    // refreshing={false}
+                        /*ListHeaderComponent={this.renderHeader}*/
+                    />
+    </View>
+    }
+    HeaderStyle={styles.headerContent}
+    ContentModalStyle={styles.Modal}
+    HeaderContent={
+    <View style={styles.containerHeader}>
+            <Button 
+                title={"Press Me"}
+                onPress={() => {
+                setanimateModal(true);
+                }}
+            />
+    </View>
+    }
+    onClose={() => ([
+        toggleModal(),
+        setModalState(false),
+        setanimateModal(false),
+    ])}
 />
 )}
 

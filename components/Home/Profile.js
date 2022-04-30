@@ -86,7 +86,8 @@ const UserDataForm = ({userId}) => {
                 <>
                     <FastImage source={{uri: userPP}} style={styles.ProfilePic}/>
                     <Text style={styles.UsernameText} selectable={true}>{userUn}</Text>
-                    <ScrollView>
+                    <ScrollView onStartShouldSetResponder={() => false}>
+                    <View style={{flex: 1}} onStartShouldSetResponder={() => true}>
                         <Text style={styles.label}>E-mail</Text>
                         <Text style={styles.text} selectable={true} placeholder="E-mail" placeholderTextColor = 'lightgrey' autoCapitalize="none">{userEmail}</Text>
                         
@@ -98,7 +99,7 @@ const UserDataForm = ({userId}) => {
                         
                         <Text style={styles.label}>Profile picture link</Text>
                         <Text style={styles.text} selectable={true} placeholder="Profile Picture URL" placeholderTextColor = 'lightgrey' autoCapitalize="none">{userPP}</Text>
-                        
+                        </View>
                     </ScrollView>
                 </>
             }
