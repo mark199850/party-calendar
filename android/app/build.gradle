@@ -79,7 +79,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -103,12 +103,12 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -249,6 +249,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
+            debuggable false
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

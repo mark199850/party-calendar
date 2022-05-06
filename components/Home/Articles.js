@@ -27,7 +27,6 @@ var articleData = [];
 var articleId = null;
 var scrollOffsetVar = "0";
 var userId = null;
-var found = false;
 
 const Articles = ({searchedStr}) => {
 
@@ -189,7 +188,6 @@ const Articles = ({searchedStr}) => {
                 try {
                     if (res.status !== 200) {
                         const jsonRes = await res.json();
-                        found=false;
                         setIsLoading(false);
                         if (data == ''){ //if there isn't already loaded results
                             showToast('error','Error',jsonRes.message);
@@ -197,7 +195,6 @@ const Articles = ({searchedStr}) => {
                     } else {
                         setIsLoading(false);
                         const jsonRes = await res.json();
-                        found=true;
                         var articleResultId = 0;
                         //let adata = [...getArticleData]; //state-es articledata-hoz
                         if (articleData.length != 0 && articleData.length % 20 != 0 ){
@@ -244,14 +241,13 @@ const Articles = ({searchedStr}) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'item' : lastFetchedArticleItemId,
+                    'item' : 1,// lastFetchedArticleItemId,
                 },
             })
             .then(async res => { 
                 try {
                     if (res.status !== 200) {
                         const jsonRes = await res.json();
-                        found=false;
                         setIsLoading(false);
                         if (data == ''){ //if there isn't already loaded results
                             showToast('error','Error',jsonRes.message);
@@ -259,8 +255,6 @@ const Articles = ({searchedStr}) => {
                     } else {
                         setIsLoading(false);
                         const jsonRes = await res.json();
-
-                        found=true;
                         var articleResultId = 0;
                         //let adata = [...getArticleData]; //state-es articledata-hoz
                         for (articleResultId = 0; articleResultId < jsonRes.length; articleResultId++){
@@ -272,7 +266,6 @@ const Articles = ({searchedStr}) => {
                             ...prevState,
                             ...Array.from({length:articleResultId}).map((_,articleResultId)=>articleResultId+1 + prevState.length),
                         ]);
-                        setLastFetchedArticleItemId(getLastFetchedArticleItemId+jsonRes.length)
                         lastFetchedArticleItemId = lastFetchedArticleItemId +jsonRes.length;
                         //console.log(data);
                         //console.log(articleData);
@@ -397,7 +390,7 @@ const Articles = ({searchedStr}) => {
                 keyExtractor={keyExtractor}
                 onRefresh={() => fetchMore(true, isSearch, searchedStr)}
                 refreshing={false}
-                getItemLayout={(data, index) => (
+             /*   getItemLayout={(data, index) => (
                     {length: 515, offset: 515 * index, index}
                     )}
                 /*ListHeaderComponent={this.renderHeader}*/
@@ -420,8 +413,7 @@ const LoadingPlaceholder = () => (
     </ContentLoader>
   )
 
-class Article extends React.PureComponent {    
-
+class Article extends React.PureComponent {
     render() {
 
         const {item} = this.props;
@@ -525,11 +517,7 @@ const ArticleFunc = ({item, data, scrollToIndex, switchScrollUnlock}) => {
 
             <Animated.View  style={[styles.articleContainer, animate == true && animatedStyles]}>
                 <ArticleHeader props={[articleData[item].UserPP, articleData[item].UserUn, articleData[item].UserId]}/>
-                <TouchableOpacity activeOpacity={0.9} style={styles.articleBodyContainer} onPress={() => ([ZoomIt({data}), scrollToIndex(item) /*globalRef.scrollToIndex({
-            animated: true,
-            index: item,
-            viewPosition: 0
-          })*/    ])}>    
+                <TouchableOpacity activeOpacity={0.9} style={styles.articleBodyContainer} onPress={() => ([ZoomIt({data}), scrollToIndex(item)])}>    
                     <ArticleBody
                       //  onLayout={(event) => {this.find_dimension(event.nativeEvent.layout)}}
                         props={[articleData[item].ArticleImg, articleData[item].ArticleName, getArticleData[0], getArticleData[1], getArticleData[2], getIfZoomed]}
