@@ -241,7 +241,7 @@ const Articles = ({searchedStr}) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'item' : 1,// lastFetchedArticleItemId,
+                    'item' : lastFetchedArticleItemId,
                 },
             })
             .then(async res => { 
